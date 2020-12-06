@@ -6,5 +6,6 @@ $appRole = $sp.AppRoles | Where-Object { $_.DisplayName -eq $app_role_name }
 
 foreach($username in Get-Content -Path .\Users.txt) {
     $user = Get-AzureADUser -ObjectId "$username"
-    Write-Output $user
+    New-AzureADUserAppRoleAssignment -ObjectId $user.ObjectId -PrincipalId $user.ObjectId -ResourceId $sp.ObjectId -Id $appRole.Id
+    Write-Output $username
 }
